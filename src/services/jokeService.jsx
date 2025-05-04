@@ -13,3 +13,19 @@ export const postNewJoke = async (jokeText) => {
 export const getAllJokes = async () => {
     return await fetch("http://localhost:8088/jokes").then((res) => res.json());
 }
+
+export const updateJokeTold = async (joke) => {
+    joke.told = !joke.told;
+
+    await fetch(`http://localhost:8088/jokes/${joke.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: joke.id,
+            text: joke.text,
+            told: joke.told
+        })
+    })
+}
