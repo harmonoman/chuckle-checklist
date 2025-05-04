@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllJokes, postNewJoke } from "./services/jokeService"
+import { getAllJokes, postNewJoke, updateJokeTold } from "./services/jokeService"
 import "./App.css"
 import stevePic from "./assets/steve.png"
 
@@ -75,14 +75,39 @@ export const App = () => {
             <span className="untold-count">{untoldJokes.length}</span>
             Untold
           </h2>
-          {untoldJokes.map(joke => {return <li className="joke-list-item" key={joke.id}>{joke.text}</li>})}
+          {untoldJokes.map(joke => {
+            return <li className="joke-list-item" key={joke.id}>
+                      {joke.text}
+                      <button 
+                        className="joke-list-action-toggle"
+                        onClick={async () =>{
+                          await updateJokeTold(joke)
+                          fetchAndSetAllJokes();
+                        }}>
+                          <i className="fa-regular fa-face-laugh-squint"></i>
+                      </button>
+                    </li>})
+          }
+            
         </div>
         <div className="joke-list-container">
           <h2>
             Told
             <span className="told-count">{toldJokes.length}</span>
           </h2>
-          {toldJokes.map(joke => {return <li className="joke-list-item" key={joke.id}>{joke.text}</li>})}
+          {toldJokes.map(joke => {
+            return <li className="joke-list-item" key={joke.id}>
+                      {joke.text}
+                      <button 
+                        className="joke-list-action-toggle"
+                        onClick={async () =>{
+                          await updateJokeTold(joke)
+                          fetchAndSetAllJokes();
+                        }}>
+                          <i className="fa-regular fa-face-meh"></i>
+                      </button>
+                    </li>})
+          }
         </div>
       </div>
     </div>)
