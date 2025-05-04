@@ -9,3 +9,7 @@ export const postNewJoke = async (jokeText) => {
     return await response.json();
 
 }
+
+export const getAllJokes = async () => {
+    return await fetch("http://localhost:8088/jokes").then((res) => res.json());
+}
