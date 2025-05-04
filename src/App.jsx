@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllJokes, postNewJoke, updateJokeTold } from "./services/jokeService"
+import { deleteJoke, getAllJokes, postNewJoke, updateJokeTold } from "./services/jokeService"
 import "./App.css"
 import stevePic from "./assets/steve.png"
 
@@ -64,7 +64,6 @@ export const App = () => {
         <button 
           className="joke-input-submit"
           onClick={() =>{
-            console.log("jokeText: ", jokeText)
             handleSubmit()
           }} >Add</button>
       </div>
@@ -78,6 +77,14 @@ export const App = () => {
           {untoldJokes.map(joke => {
             return <li className="joke-list-item" key={joke.id}>
                       {joke.text}
+                      <button 
+                        className="joke-list-action-toggle"
+                        onClick={async () =>{
+                          await deleteJoke(joke)
+                          fetchAndSetAllJokes();
+                        }}>
+                          <i className="fa-regular fa-regular fa-trash-can"></i>
+                      </button>
                       <button 
                         className="joke-list-action-toggle"
                         onClick={async () =>{
@@ -99,7 +106,15 @@ export const App = () => {
             return <li className="joke-list-item" key={joke.id}>
                       {joke.text}
                       <button 
-                        className="joke-list-action-toggle"
+                        className="joke-list-action-delete"
+                        onClick={async () =>{
+                          await deleteJoke(joke)
+                          fetchAndSetAllJokes();
+                        }}>
+                          <i className="fa-regular fa-regular fa-trash-can"></i>
+                      </button>
+                      <button 
+                        className="joke-list-action-delete"
                         onClick={async () =>{
                           await updateJokeTold(joke)
                           fetchAndSetAllJokes();

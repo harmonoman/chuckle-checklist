@@ -29,3 +29,18 @@ export const updateJokeTold = async (joke) => {
         })
     })
 }
+
+export const deleteJoke = async (joke) => {
+    await fetch(`http://localhost:8088/jokes/${joke.id}`, {
+        method: "DELETE"
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to delete resource");
+        }
+        console.log("Deleted successfully");
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
